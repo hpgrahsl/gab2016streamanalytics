@@ -1,0 +1,169 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>at.grahsl.azure.gab2016</groupId>
+	<artifactId>StreamAnalyticsEmojiTracker</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<jdk-version>1.8</jdk-version>
+		<mvn-compiler-version>3.5.1</mvn-compiler-version>
+		<mvn-shade-version>2.4.3</mvn-shade-version>
+		<spark-version-number>1.6.0</spark-version-number>
+		<spark-artifact-number>2.11</spark-artifact-number>
+		<storm-version>0.10.0</storm-version>
+		<emoji-version>3.0.0</emoji-version>
+		<scope-settings>provided</scope-settings>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_${spark-artifact-number}</artifactId>
+			<version>${spark-version-number}</version>
+			<scope>${scope-settings}</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mllib_${spark-artifact-number}</artifactId>
+			<version>${spark-version-number}</version>
+			<scope>${scope-settings}</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_${spark-artifact-number}</artifactId>
+			<version>${spark-version-number}</version>
+			<scope>${scope-settings}</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming_${spark-artifact-number}</artifactId>
+			<version>${spark-version-number}</version>
+			<scope>${scope-settings}</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming-twitter_${spark-artifact-number}</artifactId>
+			<version>${spark-version-number}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-core</artifactId>
+			<version>${storm-version}</version>
+			<scope>${scope-settings}</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j-over-slf4j</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j-slf4j-impl</artifactId>
+					<groupId>org.apache.logging.log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-jdbc</artifactId>
+			<version>0.10.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.vdurmont</groupId>
+			<artifactId>emoji-java</artifactId>
+			<version>${emoji-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.qpid</groupId>
+			<artifactId>qpid-jms-client</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.qpid</groupId>
+			<artifactId>qpid-amqp-1-0-client-jms</artifactId>
+			<version>0.32</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jms_1.1_spec</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.38</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.7.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>2.4.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.microsoft.jdbc</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${mvn-compiler-version}</version>
+				<configuration>
+					<source>${jdk-version}</source>
+					<target>${jdk-version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${mvn-shade-version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<minimizeJar>false</minimizeJar>
+							<artifactSet />
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
