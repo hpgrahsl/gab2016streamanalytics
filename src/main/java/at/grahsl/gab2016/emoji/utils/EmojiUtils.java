@@ -13,8 +13,10 @@ public class EmojiUtils {
 
 	public static final String EMOJIS_PATTERN;
 	public static final Pattern REGEXP_PATTERN;
-	public static final Set<String> EMOJIS_TO_FILTER = EmojiManager.getAll().stream().map(e -> e.getUnicode())
-			.collect(Collectors.toSet());
+	public static final Set<String> EMOJIS_TO_FILTER = 
+			EmojiManager.getAll().stream()
+				.map(e -> e.getUnicode())
+				.collect(Collectors.toSet());
 
 	static {
 		// since unicode ranges of emojis are not continous
