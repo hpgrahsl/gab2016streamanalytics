@@ -44,7 +44,10 @@ public class EmojiTrackerBasicTopo {
 			
 			LocalCluster cluster = new LocalCluster();
 			cluster.submitTopology(TOPOLOGY_NAME, conf, builder.createTopology());
-			
+			 
+			//! FOR DEMO PURPOSES ONLY !
+	        //stops a locally running topology
+			//after certain time period e.g. 5 minutes
 			Utils.sleep(300_000);
 			
 			cluster.killTopology(TOPOLOGY_NAME);
@@ -54,6 +57,9 @@ public class EmojiTrackerBasicTopo {
 		if ("cluster".equals(args[0])) {
 			conf.setNumWorkers(2);
 			try {
+				//! CLUSTER MODE !
+		        //the topology runs "forever" 
+				//or until stopped from outside 
 				StormSubmitter.submitTopology(TOPOLOGY_NAME, conf, builder.createTopology());
 			} catch (Exception e) {
 				e.printStackTrace();
