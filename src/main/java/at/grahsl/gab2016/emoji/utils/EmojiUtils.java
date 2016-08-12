@@ -19,19 +19,18 @@ public class EmojiUtils {
 				.collect(Collectors.toSet());
 
 	static {
-		// since unicode ranges of emojis are not continous
+		// since unicode ranges of emojis are not continuous
 		// we simply compile a pattern which contains
 		// every single emoji the library currently knows
-		StringBuilder emojisPattern = new StringBuilder();
-		emojisPattern.append("[");
-
-		for (String e : EMOJIS_TO_FILTER)
-			emojisPattern.append(e + "|");
-
-		emojisPattern.append("]");
-
-		EMOJIS_PATTERN = emojisPattern.toString();
-		REGEXP_PATTERN = Pattern.compile(emojisPattern.toString());
+		String pattern = 
+				EmojiManager.getAll().stream()
+				.map(e -> e.getUnicode())
+				.sorted((s1,s2) -> Integer.valueOf(s2.length()).compareTo(s1.length()))
+				.collect(Collectors.joining("|"));
+		
+		//replace potential meta characters
+		EMOJIS_PATTERN = pattern.replaceAll("\\*","");
+		REGEXP_PATTERN = Pattern.compile(EMOJIS_PATTERN);
 	}
 
 	public static List<String> extractEmojisAsString(String original) {
@@ -47,5 +46,5 @@ public class EmojiUtils {
 		return matchList;
 
 	}
-
+	
 }
