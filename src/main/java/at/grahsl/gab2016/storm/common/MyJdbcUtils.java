@@ -56,9 +56,9 @@ public class MyJdbcUtils {
 		
 		//TODO: add your local/remote data source here settings here...
 		jdbcConfig.put("dataSourceClassName","com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-		jdbcConfig.put("dataSource.url", "jdbc:mysql://localhost/emoji_tracker");
-		jdbcConfig.put("dataSource.user","emoji");
-		jdbcConfig.put("dataSource.password","emoji");
+		jdbcConfig.put("dataSource.url", "jdbc:mysql://localhost/YOUR_DATABASE");
+		jdbcConfig.put("dataSource.user","YOUR_DB_USER");
+		jdbcConfig.put("dataSource.password","YOUR_DB_PASSWORD");
 				
 		CP = new HikariCPConnectionProvider(jdbcConfig);
 		
